@@ -4,6 +4,7 @@ import com.sparta.onemonth_7th_intern.domain.user.dto.SigninRequestDto;
 import com.sparta.onemonth_7th_intern.domain.user.dto.SignupRequestDto;
 import com.sparta.onemonth_7th_intern.domain.user.dto.UserResponseDto;
 import com.sparta.onemonth_7th_intern.domain.user.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,6 +24,7 @@ public class UserController {
      * @param requestDto
      * @return 상태코드 200, UserResponseDto
      */
+    @Operation(summary = "회원가입", description = "유저 회원가입을 합니다.")
     @PostMapping("/signup")
     public ResponseEntity<SignupRequestDto> signup(@RequestBody SignupRequestDto requestDto) {
         return ResponseEntity.ok(userService.signup(requestDto));
@@ -34,6 +36,7 @@ public class UserController {
      * @param requestDto
      * @return 상태코드 200, userId
      */
+    @Operation(summary = "로그인", description = "유저 로그인을 합니다.")
     @PostMapping("/signin")
     public ResponseEntity<Long> signin(@RequestBody SigninRequestDto requestDto) {
         return ResponseEntity.ok(userService.signin(requestDto));

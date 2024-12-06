@@ -23,3 +23,7 @@ spring:
 jwt:
   secret:
     key: ${JWT_SECRET_KEY}
+
+logging:
+  level:
+    org.springframework.security: DEBUG
