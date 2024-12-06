@@ -1,0 +1,11 @@
+package com.sparta.onemonth_7th_intern.domain.user.repository;
+
+import com.sparta.onemonth_7th_intern.domain.user.entity.User;
+
+import java.util.Optional;
+
+public interface UserRepository extends JpaRepository<User, Long> {
+
+    Optional<User> findByUsername(String email);
+
+}

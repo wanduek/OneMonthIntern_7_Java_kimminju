@@ -1,1 +1,25 @@
-spring.application.name=OneMonth_7th_intern
+server:
+  port: 8080
+
+spring:
+  config:
+    import: optional:file:.env[.properties]
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    password: ${DB_PASSWORD}
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+        use_sql_comments: true
+        dialect: org.hibernate.dialect.MySQL8Dialect
+
+jwt:
+  secret:
+    key: ${JWT_SECRET_KEY}
