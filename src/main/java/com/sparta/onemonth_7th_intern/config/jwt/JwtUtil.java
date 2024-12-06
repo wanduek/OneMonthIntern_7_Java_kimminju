@@ -1,7 +1,13 @@
 package com.sparta.onemonth_7th_intern.config.jwt;
 
+import com.sparta.onemonth_7th_intern.domain.token.entity.RefreshToken;
+import com.sparta.onemonth_7th_intern.domain.token.repository.RefreshTokenRepository;
+import com.sparta.onemonth_7th_intern.domain.user.entity.User;
 import com.sparta.onemonth_7th_intern.domain.user.enums.UserRole;
+import io.jsonwebtoken.*;
+import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -10,9 +16,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-import java.security.SignatureException;
+import java.security.Key;
 import java.time.Instant;
 import java.util.Base64;
+import java.util.Date;
 import java.util.Optional;
 
 @Slf4j(topic = "JwtUtil")
@@ -53,7 +60,7 @@ public class JwtUtil {
 
     // Refresh 토큰 생성 및 설정
     public void createAndSetRefreshToken(HttpServletResponse response, User user) {
-        String token = createToken(user.getEmail(), user.getRole(), REFRESH_TOKEN_TIME);
+        String token = createToken(user.getUsername(), user.getRole(), REFRESH_TOKEN_TIME);
         Instant expiryDate = Instant.now().plusMillis(REFRESH_TOKEN_TIME);
 
         RefreshToken refreshToken = new RefreshToken(user, token, expiryDate);
@@ -86,7 +93,7 @@ public class JwtUtil {
 
     // Refresh 토큰 업데이트 하기
     public void updateRefreshToken(RefreshToken refreshToken) {
-        String token = createToken(refreshToken.getUser().getEmail(), refreshToken.getUser().getRole(), REFRESH_TOKEN_TIME);
+        String token = createToken(refreshToken.getUser().getUsername(), refreshToken.getUser().getRole(), REFRESH_TOKEN_TIME);
         Instant expiryDate = Instant.now().plusMillis(REFRESH_TOKEN_TIME);
 
         refreshToken.updateToken(token, expiryDate);
@@ -132,7 +139,7 @@ public class JwtUtil {
             Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
             log.info("Token is valid");
             return true;
-        } catch (SecurityException | MalformedJwtException | SignatureException e) {
+        } catch (SecurityException | MalformedJwtException | io.jsonwebtoken.security.SignatureException e) {
             log.error("Invalid JWT signature, 유효하지 않는 JWT 서명 입니다.");
         } catch (ExpiredJwtException e) {
             log.error("Expired JWT token, 만료된 JWT token 입니다.");

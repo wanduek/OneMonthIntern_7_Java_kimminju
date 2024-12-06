@@ -1,6 +1,7 @@
 package com.sparta.onemonth_7th_intern.domain.token.entity;
 
 import com.sparta.onemonth_7th_intern.domain.user.entity.User;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 

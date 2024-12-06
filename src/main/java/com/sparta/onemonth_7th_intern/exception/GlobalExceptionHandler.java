@@ -1,6 +1,7 @@
 package com.sparta.onemonth_7th_intern.exception;
 
-import com.sparta.onemonth_7th_intern.config.ApiResponse;
+
+import com.sparta.onemonth_7th_intern.config.dto.ApiResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;

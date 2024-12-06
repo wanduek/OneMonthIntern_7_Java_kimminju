@@ -1,12 +1,13 @@
 package com.sparta.onemonth_7th_intern.domain.user.service;
 
 import com.sparta.onemonth_7th_intern.domain.user.dto.SigninRequestDto;
-import com.sparta.onemonth_7th_intern.domain.user.dto.UserRequestDto;
+import com.sparta.onemonth_7th_intern.domain.user.dto.SignupRequestDto;
 import com.sparta.onemonth_7th_intern.domain.user.dto.UserResponseDto;
 import com.sparta.onemonth_7th_intern.domain.user.entity.User;
 import com.sparta.onemonth_7th_intern.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
@@ -16,10 +17,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    // ADMIN_TOKEN
-    private final String OWNER_TOKEN = "AAABnvxRVklrnYxKZ0aHgTBcXukeZygoC";
-
-    public UserResponseDto signup(UserRequestDto requestDto) {
+    public UserResponseDto signup(SignupRequestDto requestDto) {
         String username = requestDto.getUsername();
         String password = passwordEncoder.encode(requestDto.getPassword());
 
@@ -35,7 +33,7 @@ public class UserService {
         return new UserResponseDto(saveUser);
     }
 
-    public Long login(SigninRequestDto requestDto) {
+    public Long signin(SigninRequestDto requestDto) {
         String username = requestDto.getUsername();
         String password = requestDto.getPassword();
         User user = userRepository.findByUsername(username)

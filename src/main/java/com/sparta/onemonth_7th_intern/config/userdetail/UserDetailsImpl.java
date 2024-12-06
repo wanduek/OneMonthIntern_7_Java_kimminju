@@ -7,8 +7,9 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
-public class UserDetailsImpl implements UserDetailsServiceImpl {
+public class UserDetailsImpl implements UserDetails {
 
     private final User user;
 
@@ -27,7 +28,7 @@ public class UserDetailsImpl implements UserDetailsServiceImpl {
 
     @Override
     public String getUsername() {
-        return user.getUserName();
+        return user.getUsername();
     }
 
     public String getNickname() {

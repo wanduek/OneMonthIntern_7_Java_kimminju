@@ -1,4 +1,4 @@
-package com.sparta.onemonth_7th_intern.config;
+package com.sparta.onemonth_7th_intern.config.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;

@@ -1,6 +1,9 @@
 package com.sparta.onemonth_7th_intern.config.jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sparta.onemonth_7th_intern.config.userdetail.UserDetailsImpl;
+import com.sparta.onemonth_7th_intern.domain.user.dto.SigninRequestDto;
+import com.sparta.onemonth_7th_intern.domain.user.entity.User;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -18,7 +21,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     public JwtAuthenticationFilter(JwtUtil jwtUtil) {
         this.jwtUtil = jwtUtil;
-        setFilterProcessesUrl("/delivery/users/login");
+        setFilterProcessesUrl("/api/users/login");
     }
 
     @Override
@@ -28,7 +31,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
             return getAuthenticationManager().authenticate(
                     new UsernamePasswordAuthenticationToken(
-                            requestDto.getEmail(),
+                            requestDto.getUsername(),
                             requestDto.getPassword(),
                             null
                     )
@@ -44,14 +47,14 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         UserDetailsImpl userDetails = (UserDetailsImpl) authResult.getPrincipal();
         User user = userDetails.getUser();
 
-        String accessToken = jwtUtil.createAccessToken(user.getEmail(), user.getRole());
+        String accessToken = jwtUtil.createAccessToken(user.getUsername(), user.getRole());
         response.addHeader(JwtUtil.AUTHORIZATION_HEADER, JwtUtil.BEARER_PREFIX + accessToken);
 
 
         // RefreshToken 생성 및 쿠키에 설정
         jwtUtil.createAndSetRefreshToken(response, user);
 
-        log.info("로그인 성공: {}", user.getEmail());
+        log.info("로그인 성공: {}", user.getUsername());
     }
 
     @Override

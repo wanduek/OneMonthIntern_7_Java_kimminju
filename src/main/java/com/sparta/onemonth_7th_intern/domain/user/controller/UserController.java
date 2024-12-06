@@ -1,7 +1,7 @@
 package com.sparta.onemonth_7th_intern.domain.user.controller;
 
 import com.sparta.onemonth_7th_intern.domain.user.dto.SigninRequestDto;
-import com.sparta.onemonth_7th_intern.domain.user.dto.UserRequestDto;
+import com.sparta.onemonth_7th_intern.domain.user.dto.SignupRequestDto;
 import com.sparta.onemonth_7th_intern.domain.user.dto.UserResponseDto;
 import com.sparta.onemonth_7th_intern.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +24,7 @@ public class UserController {
      * @return 상태코드 200, UserResponseDto
      */
     @PostMapping("/signup")
-    public ResponseEntity<UserResponseDto> signup(@RequestBody UserRequestDto requestDto) {
+    public ResponseEntity<UserResponseDto> signup(@RequestBody SignupRequestDto requestDto) {
         return ResponseEntity.ok(userService.signup(requestDto));
     }
 
@@ -35,7 +35,7 @@ public class UserController {
      * @return 상태코드 200, userId
      */
     @PostMapping("/signin")
-    public ResponseEntity<Long> login(@RequestBody SigninRequestDto requestDto) {
-        return ResponseEntity.ok(userService.login(requestDto));
+    public ResponseEntity<Long> signin(@RequestBody SigninRequestDto requestDto) {
+        return ResponseEntity.ok(userService.signin(requestDto));
     }
 }

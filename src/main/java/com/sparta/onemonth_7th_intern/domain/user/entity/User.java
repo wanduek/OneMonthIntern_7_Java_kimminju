@@ -1,7 +1,8 @@
 package com.sparta.onemonth_7th_intern.domain.user.entity;
 
-import com.sparta.onemonth_7th_intern.domain.user.dto.UserRequestDto;
+import com.sparta.onemonth_7th_intern.domain.user.dto.SignupRequestDto;
 import com.sparta.onemonth_7th_intern.domain.user.enums.UserRole;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -28,7 +29,7 @@ public class User {
     @Column(nullable = false)
     private UserRole role;
 
-    public User(UserRequestDto requestDto, String password, UserRole role) {
+    public User(SignupRequestDto requestDto, String password, UserRole role) {
         this.username = requestDto.getUsername();
         this.nickname = requestDto.getNickname();
         this.password = password;
