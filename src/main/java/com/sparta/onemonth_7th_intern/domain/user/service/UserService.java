@@ -4,6 +4,7 @@ import com.sparta.onemonth_7th_intern.domain.user.dto.SigninRequestDto;
 import com.sparta.onemonth_7th_intern.domain.user.dto.SignupRequestDto;
 import com.sparta.onemonth_7th_intern.domain.user.dto.UserResponseDto;
 import com.sparta.onemonth_7th_intern.domain.user.entity.User;
+import com.sparta.onemonth_7th_intern.domain.user.enums.UserRole;
 import com.sparta.onemonth_7th_intern.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -17,20 +18,21 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public UserResponseDto signup(SignupRequestDto requestDto) {
+    public SignupRequestDto signup(SignupRequestDto requestDto) {
         String username = requestDto.getUsername();
         String password = passwordEncoder.encode(requestDto.getPassword());
+        UserRole role = requestDto.getRole();
 
         Optional<User> checkUsername = userRepository.findByUsername(username);
         if (checkUsername.isPresent()) {
-            throw new IllegalArgumentException("중복된 Email 입니다.");
+            throw new IllegalArgumentException("중복된 username 입니다.");
         }
 
         User user = new User(requestDto, password, role);
 
-        User saveUser = userRepository.save(user);
+        userRepository.save(user);
 
-        return new UserResponseDto(saveUser);
+        return requestDto;
     }
 
     public Long signin(SigninRequestDto requestDto) {

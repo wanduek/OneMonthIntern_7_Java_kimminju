@@ -24,7 +24,7 @@ public class UserController {
      * @return 상태코드 200, UserResponseDto
      */
     @PostMapping("/signup")
-    public ResponseEntity<UserResponseDto> signup(@RequestBody SignupRequestDto requestDto) {
+    public ResponseEntity<SignupRequestDto> signup(@RequestBody SignupRequestDto requestDto) {
         return ResponseEntity.ok(userService.signup(requestDto));
     }
 

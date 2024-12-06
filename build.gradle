@@ -38,6 +38,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.0' // JUnit 5
+    testImplementation 'org.assertj:assertj-core:3.23.1' // AssertJ
 
      // MySQL
     runtimeOnly 'com.mysql:mysql-connector-j'
